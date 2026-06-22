@@ -463,4 +463,15 @@ textarea::placeholder {
     align-items: stretch;
     flex-direction: column;
   }
+
+  .output-button-group {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .output-button-group .button {
+    flex: 1 1 auto;
+    min-width: 100px;
+    width: auto;
+  }
 }
