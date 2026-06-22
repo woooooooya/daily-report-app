@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SecureX 일일 업무보고서 자동 생성기</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">SecureX 기술지원팀</p>
+          <h1>SecureX 일일 업무보고서 자동 생성기</h1>
+        </div>
+        <span class="status-badge">기본 화면</span>
+      </header>
+
+      <section class="workspace" aria-label="일일 업무보고서 작성 화면">
+        <form class="input-panel" id="reportForm">
+          <section class="api-key-panel" aria-label="OpenAI API Key 설정">
+            <div class="api-key-header">
+              <div>
+                <p class="eyebrow">AI 보고서 생성 모드</p>
+                <label for="apiKeyInput">OpenAI API Key</label>
+              </div>
+              <span id="apiKeyStatus" class="api-status">API Key 미설정</span>
+            </div>
+            <div class="api-key-row">
+              <input
+                type="password"
+                id="apiKeyInput"
+                name="apiKeyInput"
+                placeholder="OpenAI API Key를 입력하세요"
+                autocomplete="off"
+              />
+              <button type="button" class="button secondary" id="saveApiKeyButton">API Key 저장</button>
+              <button type="button" class="button ghost" id="deleteApiKeyButton">API Key 삭제</button>
+            </div>
+            <p class="help-note">
+              LocalStorage는 실습용 임시 저장소입니다. 실제 운영 서비스에서는 API Key를 서버에서 관리해야 합니다.
+            </p>
+          </section>
+
+          <div class="field-group">
+            <label for="reportDate">작성일</label>
+            <input type="date" id="reportDate" name="reportDate" />
+          </div>
+
+          <div class="field-group">
+            <label for="messengerInput">메신저 대화 내용</label>
+            <textarea
+              id="messengerInput"
+              name="messengerInput"
+              rows="13"
+              placeholder="메신저 대화 내용을 붙여넣어 주세요."
+            ></textarea>
+          </div>
+
+          <div class="field-group">
+            <label for="jiraInput">JIRA 업무 데이터</label>
+            <textarea
+              id="jiraInput"
+              name="jiraInput"
+              rows="11"
+              placeholder="JIRA CSV 데이터를 붙여넣어 주세요."
+            ></textarea>
+          </div>
+
+          <div class="button-row">
+            <button type="button" class="button secondary" id="loadSampleButton">
+              샘플 데이터 불러오기
+            </button>
+            <button type="button" class="button local" id="localReportButton">
+              로컬 샘플 보고서 생성
+            </button>
+            <button type="submit" class="button primary" id="aiReportButton">AI 보고서 생성</button>
+            <button type="button" class="button ghost" id="resetButton">초기화</button>
+          </div>
+        </form>
+
+        <section class="output-panel" aria-label="보고서 출력 영역">
+          <div class="output-header">
+            <div>
+              <p class="eyebrow">생성 결과</p>
+              <h2>보고서 출력 영역</h2>
+            </div>
+            <div class="output-button-group">
+              <button type="button" class="button compact" id="copyButton">보고서 복사</button>
+              <button type="button" class="button compact download" id="downloadButton">MD 다운로드</button>
+            </div>
+          </div>
+
+          <p id="generationMode" class="mode-note">보고서 생성 방식: 아직 생성되지 않음</p>
+          
+          <div class="report-section">
+            <div id="reportSummaryContainer" class="summary-container" style="display: none;">
+              <h3 class="section-title">업무 현황 요약표</h3>
+              <div class="table-wrapper">
+                <table id="reportSummaryTable" class="report-table">
+                  <thead>
+                    <tr>
+                      <th>구분</th>
+                      <th>주요 내용</th>
+                      <th>담당자</th>
+                      <th>상태</th>
+                      <th>우선순위</th>
+                      <th>다음 조치</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div id="reportBodyContainer" class="body-container" style="display: none;">
+              <h3 class="section-title">일일 업무보고서</h3>
+              <pre id="reportOutput" class="report-output"></pre>
+            </div>
+          </div>
+
+          <div id="generatedTime" class="generated-time" style="display: none;"></div>
+        </section>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
